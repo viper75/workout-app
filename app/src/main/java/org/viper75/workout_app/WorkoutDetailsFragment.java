@@ -1,12 +1,11 @@
 package org.viper75.workout_app;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,13 @@ public class WorkoutDetailsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
+            StopwatchFragment fragment = new StopwatchFragment();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            transaction.replace(R.id.stopwatch_fragment, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else {
             workoutId = savedInstanceState.getInt(SAVED_WORKOUT_ID);
         }
     }
